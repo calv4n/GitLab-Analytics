@@ -1,4 +1,4 @@
-const GITLAB_API_URL = process.env.GITLAB_API_URL || "https://gitlab.com/api/v4";
+const GITLAB_API_URL = process.env.GITLAB_API_URL;
 const GITLAB_TOKEN = process.env.GITLAB_ACCESS_TOKEN;
 const GITLAB_PROJECT_ID = process.env.GITLAB_PROJECT_ID;
 
