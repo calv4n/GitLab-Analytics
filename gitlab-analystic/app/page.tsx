@@ -65,19 +65,20 @@ export default async function Home(props: PageProps) {
         </p>
       </div>
 
-      <Filters />
+      <div className="flex md:flex-row flex-col gap-8">
+        <Filters />
+          <div className="gap-8 flex flex-col md:w-3/4 w-full grid lg:grid-cols-2">
+            <div className="lg:col-span-2 p-6 rounded-lg border bg-card shadow-sm">
+              <h2 className="text-xl font-semibold mb-4">Activity Overview</h2>
+              <Charts data={chartData} type="bar" />
+            </div>
 
-      <div className="grid gap-8 lg:grid-cols-3">
-        <div className="lg:col-span-2 p-6 rounded-lg border bg-card shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">Activity Overview</h2>
-          <Charts data={chartData} type="bar" />
-        </div>
-
-        <div className="p-6 rounded-lg border bg-card shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">Contributors</h2>
-          <UserList stats={userStats} view={view} />
-        </div>
-      </div>
+            <div className="p-6 rounded-lg border bg-card shadow-sm">
+              <h2 className="text-xl font-semibold mb-4">Contributors</h2>
+              <UserList stats={userStats} view={view} />
+            </div>
+          </div>
+      </div>      
     </main>
   );
 }

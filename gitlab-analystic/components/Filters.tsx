@@ -23,7 +23,7 @@ export function Filters() {
     };
 
     return (
-        <div className="flex flex-col gap-6 w-full">
+        <div className="flex flex-col gap-6 md:w-1/4 w-full">
             <div className="space-y-4">
                 <h3 className="text-xl font-bold">Contributions</h3>
                 <SixFilterWrapper
