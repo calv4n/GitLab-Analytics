@@ -73,6 +73,9 @@ export default async function Home(props: PageProps) {
         <div className="md:w-3/4 w-full space-y-8">
           <div className="p-6 rounded-lg border bg-card shadow-sm">
             <h2 className="text-xl font-semibold mb-4">Activity Overview</h2>
+            <p className="text-sm text-muted-foreground mb-4">
+              From {startDate} to {endDate}
+            </p>
             <Charts data={chartData} type="bar" />
           </div>
 
