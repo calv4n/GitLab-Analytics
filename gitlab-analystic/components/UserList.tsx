@@ -8,7 +8,7 @@ interface UserListProps {
 
 export function UserList({ stats, view }: UserListProps) {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             {stats.map((stat) => (
                 <UserCard key={stat.user.id || stat.user.name} stat={stat} view={view} />
             ))}
