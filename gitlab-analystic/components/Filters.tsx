@@ -1,6 +1,13 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+import dynamic from "next/dynamic";
+
+const SixFilterWrapper = dynamic(() => import("./SixFilterWrapper"), {
+    ssr: false,
+    loading: () => <div className="h-32 w-full animate-pulse bg-muted rounded-xl" />,
+});
 
 export function Filters() {
     const router = useRouter();
@@ -19,42 +26,12 @@ export function Filters() {
         <div className="flex flex-col gap-6 w-full">
             <div className="space-y-4">
                 <h3 className="text-xl font-bold">Contributions</h3>
-
-                <div className="flex flex-col gap-2">
-                    <div className="relative">
-                        <select
-                            aria-label="Filter Period"
-                            value={currentPeriod}
-                            onChange={(e) => updateParam("period", e.target.value)}
-                            className="w-full p-3 rounded-xl border bg-card hover:bg-accent transition-colors appearance-none font-medium cursor-pointer"
-                        >
-                            <option value="last_month">Last Month</option>
-                            <option value="last_3_months">Last 3 Months</option>
-                            <option value="last_6_months">Last 6 Months</option>
-                            <option value="last_year">Last Year</option>
-                            <option value="all_time">All Time</option>
-                        </select>
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
-                            ▼
-                        </div>
-                    </div>
-
-                    <div className="relative">
-                        <select
-                            aria-label="Filter View"
-                            value={currentView}
-                            onChange={(e) => updateParam("view", e.target.value)}
-                            className="w-full p-3 rounded-xl border bg-card hover:bg-accent transition-colors appearance-none font-medium cursor-pointer"
-                        >
-                            <option value="commits">Contributions: Commits</option>
-                            <option value="additions">Contributions: Additions</option>
-                            <option value="deletions">Contributions: Deletions</option>
-                        </select>
-                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none opacity-50">
-                            ▼
-                        </div>
-                    </div>
-                </div>
+                <SixFilterWrapper
+                    currentPeriod={currentPeriod}
+                    currentView={currentView}
+                    onPeriodChange={(val) => updateParam("period", val)}
+                    onViewChange={(val) => updateParam("view", val)}
+                />
             </div>
         </div>
     );
