@@ -76,7 +76,7 @@ export default async function Home(props: PageProps) {
             <Charts data={chartData} type="bar" />
           </div>
 
-          <div className="p-6 rounded-lg border bg-card shadow-sm">
+          <div>
             <h2 className="text-xl font-semibold mb-4">Contributors</h2>
             <UserList stats={userStats} view={view} />
           </div>
