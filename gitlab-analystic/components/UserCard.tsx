@@ -23,8 +23,8 @@ export function UserCard({ stat, view }: UserCardProps) {
                     if (view === 'deletions') return day.deletions;
                     return day.commits;
                 }),
-                borderColor: view === "deletions" ? "rgb(220, 38, 38)" : view === "additions" ? "rgb(22, 163, 74)" : "rgb(234, 179, 8)", // Orange/Yellow for commits in user card to match mockup feel? Mockup had orange bars.
-                backgroundColor: view === "deletions" ? "rgba(220, 38, 38, 0.5)" : view === "additions" ? "rgba(22, 163, 74, 0.5)" : "rgba(234, 179, 8, 0.5)",
+                borderColor: view === "deletions" ? "rgb(220, 38, 38)" : view === "additions" ? "rgb(22, 163, 74)" : "rgb(249, 115, 22)", // unified orange for commits
+                backgroundColor: view === "deletions" ? "rgba(220, 38, 38, 0.5)" : view === "additions" ? "rgba(22, 163, 74, 0.5)" : "rgba(249, 115, 22, 0.5)",
                 tension: 0.1,
                 borderWidth: 1,
                 pointRadius: 0

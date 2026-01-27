@@ -102,8 +102,8 @@ export function processChartData(commits: GitLabCommit[], view: string = "commit
             {
                 label: view.charAt(0).toUpperCase() + view.slice(1),
                 data: sortedDates.map(d => dailyStats[d]),
-                borderColor: view === "deletions" ? "rgb(220, 38, 38)" : view === "additions" ? "rgb(22, 163, 74)" : "rgb(59, 130, 246)",
-                backgroundColor: view === "deletions" ? "rgba(220, 38, 38, 0.5)" : view === "additions" ? "rgba(22, 163, 74, 0.5)" : "rgba(59, 130, 246, 0.5)",
+                borderColor: view === "deletions" ? "rgb(220, 38, 38)" : view === "additions" ? "rgb(22, 163, 74)" : "rgb(249, 115, 22)",
+                backgroundColor: view === "deletions" ? "rgba(220, 38, 38, 0.5)" : view === "additions" ? "rgba(22, 163, 74, 0.5)" : "rgba(249, 115, 22, 0.5)",
             }
         ]
     };
