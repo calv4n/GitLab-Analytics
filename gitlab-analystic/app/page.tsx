@@ -1,7 +1,7 @@
 import { Filters } from "@/components/Filters";
 import { Charts } from "@/components/Charts";
 import { UserList } from "@/components/UserList";
-import { getCommits, getProjectUsers } from "@/lib/gitlab";
+import { getCommits, getProjectUsers, getProjectDetails } from "@/lib/gitlab";
 import { processChartData, processUserStats } from "@/lib/data-processing";
 import { subMonths, subYears, formatISO, format, parseISO } from "date-fns";
 import { Suspense } from "react";
@@ -42,9 +42,10 @@ export default async function Home(props: PageProps) {
   }
 
   // Fetch data
-  const [commits, users] = await Promise.all([
+  const [commits, users, project] = await Promise.all([
     getCommits(since),
-    getProjectUsers()
+    getProjectUsers(),
+    getProjectDetails()
   ]);
 
   // Formatierung der Datumsangaben für Anzeige und Filterung
@@ -58,11 +59,17 @@ export default async function Home(props: PageProps) {
 
   return (
     <main className="container mx-auto py-8 px-4">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
-        <p className="text-muted-foreground">
-          Track repository activity and contributions.
-        </p>
+      <div className="mb-8 flex flex-col md:flex-row gap-4">
+        <div>
+          <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
+          <p className="text-muted-foreground">
+            Track repository activity and contributions.
+          </p>
+          <hr className="mt-8 opacity-40" />
+        </div>
+        <h2 className="text-2xl font-bold text-muted-foreground mb-2">
+              {project?.name_with_namespace || project?.name || "Repository"}
+        </h2>
       </div>
 
       <div className="flex flex-col gap-8 md:flex-row">
@@ -72,7 +79,7 @@ export default async function Home(props: PageProps) {
 
         <div className="md:w-3/4 w-full space-y-8">
           <div className="p-6 rounded-lg border bg-card shadow-sm">
-            <h2 className="text-xl font-semibold mb-4">Activity Overview</h2>
+            <h2 className="text-xl font-semibold mb-1">Activity Overview</h2>
             <p className="text-sm text-muted-foreground mb-4">
               From {startDate} to {endDate}
             </p>

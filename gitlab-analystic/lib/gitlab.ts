@@ -30,6 +30,14 @@ export interface GitLabUser {
     web_url: string;
 }
 
+export interface GitLabProject {
+    id: number;
+    name: string;
+    name_with_namespace: string;
+    path_with_namespace: string;
+    web_url: string;
+}
+
 const globalCache: Record<string, { data: any; timestamp: number }> = {};
 const CACHE_DURATION = 60 * 1000; // 1 minute
 
@@ -124,4 +132,32 @@ export async function getCommits(since?: string, until?: string): Promise<GitLab
 
 export async function getProjectUsers(): Promise<GitLabUser[]> {
     return fetchGitLab("members/all", { per_page: "100" });
+}
+
+export async function getProjectDetails(): Promise<GitLabProject | null> {
+    if (!GITLAB_TOKEN) {
+        throw new Error("GitLab Token not configured");
+    }
+
+    const cacheKey = "project-details";
+    if (globalCache[cacheKey] && Date.now() - globalCache[cacheKey].timestamp < CACHE_DURATION) {
+        return globalCache[cacheKey].data as GitLabProject;
+    }
+
+    const url = `${GITLAB_API_URL}/projects/${GITLAB_PROJECT_ID}`;
+    const response = await fetch(url, {
+        headers: {
+            "PRIVATE-TOKEN": GITLAB_TOKEN,
+        },
+        next: { revalidate: 60 },
+    });
+
+    if (!response.ok) {
+        if (response.status === 404) return null;
+        throw new Error(`GitLab API Error: ${response.status} ${response.statusText} for URL: ${url}`);
+    }
+
+    const data = (await response.json()) as GitLabProject;
+    globalCache[cacheKey] = { data, timestamp: Date.now() };
+    return data;
 }
