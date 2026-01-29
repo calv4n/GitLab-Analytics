@@ -59,7 +59,8 @@ export default async function Home(props: PageProps) {
 
   return (
     <main className="container mx-auto py-8 px-4">
-      <div className="mb-8 flex flex-col md:flex-row gap-4">
+      <div className="flex lg:flex-row flex-col">
+        <div className="mb-8 flex flex-col gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2">Dashboard</h1>
           <p className="text-muted-foreground">
@@ -67,16 +68,14 @@ export default async function Home(props: PageProps) {
           </p>
           <hr className="mt-8 opacity-40" />
         </div>
-        <h2 className="text-2xl font-bold text-muted-foreground mb-2">
-              {project?.name_with_namespace || project?.name || "Repository"}
-        </h2>
-      </div>
-
-      <div className="flex flex-col gap-8 md:flex-row">
-        <div className="md:w-1/4 w-full">
+        <div className="lg:w-full md:w-1/2 w-full">
           <Filters />
         </div>
-
+      </div>
+      <div className="flex flex-col gap-8 md:items-center items-start w-full">
+        <h2 className="text-2xl font-bold mb-2">
+              {project?.name_with_namespace || project?.name || "Repository"}
+        </h2>
         <div className="md:w-3/4 w-full space-y-8">
           <div className="p-6 rounded-lg border bg-card shadow-sm">
             <h2 className="text-xl font-semibold mb-1">Activity Overview</h2>
@@ -92,6 +91,10 @@ export default async function Home(props: PageProps) {
           </div>
         </div>
       </div>
+      </div>
+      
+
+      
     </main>
   );
 }
