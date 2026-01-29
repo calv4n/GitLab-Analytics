@@ -10,6 +10,8 @@ interface UserCardProps {
     view: string; // "commits" | "additions" | "deletions"
 }
 
+const numberFormatter = new Intl.NumberFormat("en-US");
+
 export function UserCard({ stat, view }: UserCardProps) {
     const sortedDates = Object.keys(stat.dailyStats).sort();
     const chartData = {
@@ -56,8 +58,8 @@ export function UserCard({ stat, view }: UserCardProps) {
 
             <div className="flex items-baseline gap-2 text-sm">
                 <span className="font-bold">{stat.commits} commits</span>
-                <span className="text-green-600 font-semibold">{stat.additions.toLocaleString()} ++</span>
-                <span className="text-red-600 font-semibold">{stat.deletions.toLocaleString()} --</span>
+                <span className="text-green-600 font-semibold">{numberFormatter.format(stat.additions)} ++</span>
+                <span className="text-red-600 font-semibold">{numberFormatter.format(stat.deletions)} --</span>
             </div>
 
             <div className="h-24 w-full">
