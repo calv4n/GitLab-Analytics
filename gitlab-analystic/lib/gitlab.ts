@@ -45,6 +45,12 @@ async function fetchGitLab(path: string, params: Record<string, string> = {}) {
     if (!GITLAB_TOKEN) {
         throw new Error("GitLab Token not configured");
     }
+    if (!GITLAB_API_URL) {
+        throw new Error("GITLAB_API_URL is not set in environment variables.");
+    }
+    if (!GITLAB_PROJECT_ID) {
+        throw new Error("GITLAB_PROJECT_ID is not set in environment variables.");
+    }
 
     const queryString = new URLSearchParams(params).toString();
     const url = `${GITLAB_API_URL}/projects/${GITLAB_PROJECT_ID}/${path}${queryString ? `?${queryString}` : ""}`;
@@ -57,6 +63,8 @@ async function fetchGitLab(path: string, params: Record<string, string> = {}) {
     const response = await fetch(url, {
         headers: {
             "PRIVATE-TOKEN": GITLAB_TOKEN,
+            // Some GitLab instances accept Bearer tokens as well; include both to be robust.
+            ...(GITLAB_TOKEN ? { Authorization: `Bearer ${GITLAB_TOKEN}` } : {}),
         },
         // Alle 60 Sekunden neu validieren
         next: { revalidate: 60 },
@@ -64,6 +72,11 @@ async function fetchGitLab(path: string, params: Record<string, string> = {}) {
 
     if (!response.ok) {
         if (response.status === 404) return null;
+        if (response.status === 401) {
+            throw new Error(
+                `GitLab API Error: 401 Unauthorized for URL: ${url} - check GITLAB_ACCESS_TOKEN and permissions (env: GITLAB_ACCESS_TOKEN=${!!GITLAB_TOKEN})`
+            );
+        }
         throw new Error(`GitLab API Error: ${response.status} ${response.statusText} for URL: ${url}`);
     }
 
