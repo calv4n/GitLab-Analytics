@@ -4,6 +4,7 @@ import { UserList } from "@/components/UserList";
 import { getCommits, getProjectUsers, getProjectDetails } from "@/lib/gitlab";
 import { processChartData, processUserStats } from "@/lib/data-processing";
 import { subMonths, subYears, formatISO, format, parseISO } from "date-fns";
+import Link from "next/link";
 import { Suspense } from "react";
 
 interface PageProps {
@@ -74,7 +75,14 @@ export default async function Home(props: PageProps) {
       </div>
       <div className="flex flex-col gap-8 md:items-center items-start w-full">
         <h2 className="text-2xl font-bold mb-2">
-              {project?.name_with_namespace || project?.name || "Repository"}
+          <Link
+            href={project?.web_url || "#"}
+            className="underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            {project?.name_with_namespace || project?.name || "Repository"}
+          </Link>
         </h2>
         <div className="md:w-3/4 w-full space-y-8">
           <div className="p-6 rounded-lg border bg-card shadow-sm">
